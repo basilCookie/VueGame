@@ -3,12 +3,32 @@ new Vue({
     data : {
         myChoice : null,
         comChoice : null,
-        count : 3,
         winner : null,
+        Selectable : true,
+        count : 3,
         lifeOfMe : 3,
         lifeOfCom :3,
-        Selectable : true,
-        logs : []
+        logs : [],
+        selects:[
+            { name: '가위', value: 'scissor'},
+            { name: '바위', value: 'rock'},
+            { name: '보', value: 'paper'},
+        ]
+    },
+    computed : {
+        myChoiceImg : function(){
+            return this.myChoice !== null ? `Images/${this.myChoice}.jpg` : "Images/question.jpg"
+        },
+        comChoiceImg : function(){
+            return this.comChoice !== null ? `Images/${this.comChoice}.jpg` : "Images/question.jpg"
+        },
+        leftLifeOfMe : function(){
+            return 3 - this.lifeOfMe
+        },
+        leftLifeOfCom : function(){
+            return 3 - this.lifeOfCom
+
+        }
     },
     watch :{
         count: function(newVal){
@@ -43,10 +63,11 @@ new Vue({
     methods:{
         startGame : function(){
             //버튼이 클릭되면 보이지 않음 
-            this.Selectable = false;
             if(this.myChoice === null){
                 alert('가위 바위 보 중 하나를 선택해 주세요')
             }else{
+                //버튼이 클릭되면 보이지 않음 
+                this.Selectable = false;
                 let countDown = setInterval(()=>{
                     this.count--
                     if(this.count === 0 ){
